@@ -1,0 +1,44 @@
+﻿@page "/userslist"
+@attribute [Authorize(Roles = "Admin")]
+
+<PageTitle>Users List</PageTitle>
+
+@if (_usersList == null)
+{
+    <div class="loader"></div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            <h3>Users List</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>User Email</th>
+                        <th>User Roles</th>
+                        <th>Manage Roles</th>
+                        <th>FindUserByName</th>
+                        <th>FindUserByEmail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in _usersList!)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>@user.Email</td>
+                            <th>@user.UserRoles</th>
+                            <td><a class="btn btn-info" href="/getuserwithroles/@user.Id">Manage Roles</a></td>
+                            <td><a class="btn btn-info" href="/getuserbyname/@user.UserName">Get By Name</a></td>
+                            <td><a class="btn btn-info" href="/getuserbyemail/@user.Email">Get By Email</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

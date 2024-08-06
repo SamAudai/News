@@ -1,0 +1,22 @@
+﻿@page "/home"
+
+<PageTitle>Index</PageTitle>
+
+
+        <h4><a href="counter">By Html</a></h4>
+
+        <button class="btn btn-dark" @onclick="GoToCounterPage">By Code</button>
+<AuthorizeView>
+    <Authorized>
+
+        <CascadingValue Value="@FontColor">
+            <Home name="@context.User.FindFirst(ClaimTypes.Name).Value" @attributes="imageAttribute"></Home>
+
+            <SurveyPrompt Title="How is Blazor working for you?" />
+        </CascadingValue>
+   </Authorized>
+   <NotAuthorized>
+       <h4>You are not authorized!</h4>
+   </NotAuthorized>
+</AuthorizeView>
+

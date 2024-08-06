@@ -1,0 +1,23 @@
+﻿@page "/getuserwithroles/{userId}"
+
+<PageTitle>Manage User Roles</PageTitle>
+<div class="card">
+    <div class="card-header">
+        <h1>@_usersRoles.UserName</h1>
+    </div>
+    <div class="card-body">
+        @if(_usersRoles.Roles != null)
+        {
+            <EditForm Model="_usersRoles" OnValidSubmit="Save">
+                @foreach(var role in _usersRoles.Roles)
+                {
+                    <p>
+                        <input type="checkbox" @bind="role.isSelected" />
+                        <label for="@role.isSelected" class="form-label">@role.Name</label>
+                    </p>
+                }
+                <button type="submit" class="btn btn-success mt-2 float-end">Save</button>
+            </EditForm>
+        }
+    </div>
+</div>

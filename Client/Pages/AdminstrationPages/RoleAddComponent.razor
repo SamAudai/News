@@ -1,0 +1,19 @@
+﻿@page "/newrole"
+<div class="card">
+    <div class="card-header">
+        <h3>New Role</h3>
+    </div>
+    <div class="card-body">
+        <EditForm Model="_roles" OnValidSubmit="Create">
+            <DataAnnotationsValidator />
+            <ValidationSummary />            
+            <div class="form-group">
+                <label for="name" class="form-label col-5">Role Name</label>
+                <InputText class="form-control col-7" id="name" @bind-Value="_roles.Name" />
+                <ValidationMessage For="@(() => _roles.Name)" />
+            </div>
+            <button class="btn btn-info float-end mt-2 mb-2" type="submit">Save</button>
+        </EditForm>
+    </div>
+</div>
+

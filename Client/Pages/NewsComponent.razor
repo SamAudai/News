@@ -1,0 +1,59 @@
+﻿@page "/"
+
+<PageTitle>News List</PageTitle>
+
+<div class="card mb-2">
+    <div class="card-header">
+        <h3>News List 
+            <AuthorizeView Roles="Admin, Content Creator">
+                <Authorized>
+                    <a href="addnews" class="btn btn-info float-end">Add New</a>
+                </Authorized>
+            </AuthorizeView>
+        </h3>
+        <div class="row">
+            <div class="col-md-6">
+                <EditForm Model="_categories">
+                    <InputSelect id="categoryId" ValueChanged="@((int value)=>GetNewsByCategoryId(value))" ValueExpression="@(()=>CatId)" Value="@CatId" class="form-control">
+                        <option value="0">All Categories</option>
+                        @foreach(var cat in _categories)
+                        {
+                            <option value="@cat.id">@cat.name</option>
+                        }
+                    </InputSelect>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if(_newsLists != null)
+{
+    @foreach (var item in _newsLists)
+    {
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-9 my-auto">
+                        <h3>@item.title</h3>
+                        <h5>@item.subTitle</h5>
+                    </div>
+                    <div class="col-md-3 float-end my-auto">
+                        <h5>@item.date</h5>
+                        <h5>@item.category!.name</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="NewsImages/@item.image" alt="no image" />
+                    </div>
+                    <div class="col-md-8 my-auto">
+                        <h3>@item.shortDetails <a href="/newsdetails/@item.id">More Details</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

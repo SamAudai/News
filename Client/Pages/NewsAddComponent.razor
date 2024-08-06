@@ -1,0 +1,49 @@
+﻿@page "/addnews"
+@attribute [Authorize(Roles = "Admin, Content Creator")]
+
+<PageTitle>Add New</PageTitle>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Add News</h3>
+    </div>
+    @if(_categories != null)
+    {
+        <div class="card-body">
+            <EditForm Model="_newsListDto" OnValidSubmit="Create">
+                <DataAnnotationsValidator />
+                <div class="form-group row mb-md-2">
+                    <label for="title" class="form-label col-4">Title</label>
+                    <InputText class="form-control col-8 mb-4" id="title" @bind-Value="_newsListDto.title"> </InputText>
+                    <ValidationMessage For="() => _newsListDto.title" />
+
+                    <label for="subtitle" class="form-label col-4">Sub Title</label>
+                    <InputText class="form-control col-8 mb-4" id="subtitle" @bind-Value="_newsListDto.subTitle"> </InputText>
+                    <ValidationMessage For="() => _newsListDto.subTitle" />
+
+                    <label for="category" class="form-label col-4">Category</label>
+                    <InputSelect id="categoryid" @bind-Value="_newsListDto.categoryid" class="form-control col-8 mb-4">
+                        <option value="0">...Select Category...</option>
+                        @foreach(var item in _categories)
+                        {
+                            <option value="@item.id">@item.name</option>
+                        }
+                    </InputSelect>
+
+                    <label for="image" class="form-label col-4">Select Image</label>
+                    <InputFile class="form-control col-4 mb-4" OnChange="@FileLoad"></InputFile>
+
+                    <label for="shortdetails" class="form-label col-4">Short Details</label>
+                    <InputTextArea class="form-control col-8 mb-4" id="shortdetails" @bind-Value="_newsListDto.shortDetails"> </InputTextArea>
+                    <ValidationMessage For="() => _newsListDto.shortDetails" />
+
+                    <label for="details" class="form-label col-4">Details</label>
+                    <InputTextArea class="form-control col-8 mb-4" id="details" @bind-Value="_newsListDto.details"> </InputTextArea>
+                    <ValidationMessage For="() => _newsListDto.details" />
+                </div>
+                <button type="submit" class="btn btn-success mt-3 float-end">Save</button>
+            </EditForm>
+        </div>
+    }
+  
+</div>

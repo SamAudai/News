@@ -1,0 +1,73 @@
+﻿@page "/newsdetails/{id}"
+
+@if (newsList != null && newsList.category != null && _comments!=null)
+{
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-9 my-auto">
+                    <h3>@newsList.title</h3>
+                    <h5>@newsList.subTitle</h5>
+                </div>
+                <div class="col-md-3 float-end my-auto">
+                    <button class=" btn btn-primary">Update</button>
+                    <button class=" btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="alert-info mb-2">
+
+                    <h5>@newsList.date</h5>
+                    <h5>@newsList.category!.name</h5>
+
+                </div>
+                <div class="col-md-4">
+                    <img src="NewsImages/@newsList.image" alt="no image" style="width:200px;" />
+                </div>
+                <div class="col-md-8 my-auto">
+                    <h3>@newsList.shortDetails</h3>
+                    <h5>@newsList.details</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Add Comment</h3>
+    <AuthorizeView>
+        <Authorized>
+            <EditForm Context="_context" Model="_comment" OnValidSubmit="AddComment" class="card card-body bg-light mt-5">
+                <div class="form-group-color row">
+                    <div class="col-md-12">
+                        <InputText id="commentDetail" class="form-control" @bind-Value=_comment.details />
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12 text-end">
+                        <button type="submit" class="btn btn-success">Add Comment</button>
+                    </div>
+                </div>
+            </EditForm>
+        </Authorized>
+        <NotAuthorized>
+            <h4 class="alert alert-info">Please login to add comment</h4>
+        </NotAuthorized>
+    </AuthorizeView>
+
+    <h3>All Comments</h3>
+    @if(_comments.Count >= 0)
+    {
+        @foreach(var com in _comments)
+        {
+            <div class="card">
+                <div class="card-header">@com.date</div>
+                <div class="card-body">@com.details</div>
+            </div>
+        }
+    }else
+    {
+        <h4>Be First one comment</h4>
+    }
+}
+
